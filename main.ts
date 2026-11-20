@@ -16,6 +16,12 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildDossier } from './vendor/makefun-app.ts';
 
+// Vice Frame: the app under app/ is a GTA-style cover art maker — it cuts photos into keylined poster
+// panels, grades them like a Vice sunset, sets a bold condensed headline and exports a PNG. This program
+// hands that app in, unchanged in behaviour from the starter's plumbing below.
+const TITLE = 'Vice Frame — GTA-style cover art maker';
+console.log(TITLE);
+
 const here = fileURLToPath(new URL('.', import.meta.url));
 const out = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 

@@ -3,21 +3,93 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cover Snap</title>
+<title>Vice Frame — Cover Art Maker</title>
+<link rel="icon" href="data:,">
 <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<main class="app">
-  <section class="controls">
-    <h1>Cover Snap</h1>
-    <p>A photo and a caption, made into a square cover.</p>
-    <label>Photo <input id="photo" type="file" accept="image/*"></label>
-    <label>Caption <input id="caption" type="text" maxlength="40" value="Sunset Heist"></label>
-    <button id="export" type="button">Export PNG 1080 x 1080</button>
-    <p id="status" role="status"></p>
-  </section>
-  <canvas id="cover" width="1080" height="1080" aria-label="The cover"></canvas>
-</main>
-<script type="module" src="./src/main.js"></script>
+<div id="app" class="app">
+  <aside class="panel">
+    <header class="brand">
+      <h1>Vice <span>Frame</span></h1>
+      <p>Your photos, cut into poster cover art. Pick a layout, grade the colours, set the headline, export.</p>
+    </header>
+
+    <section class="group">
+      <h2>Photos</h2>
+      <div id="dropZone" class="dropzone" tabindex="0">
+        <strong>Drop photos here</strong>
+        <span>or</span>
+        <button id="browseBtn" type="button" class="ghost">Browse files</button>
+        <input id="photoInput" type="file" accept="image/*" multiple hidden>
+      </div>
+      <div id="photoStrip" class="photo-strip" aria-label="Your photos"></div>
+      <button id="fillAllBtn" type="button" class="ghost wide">Use selected photo in every panel</button>
+      <p class="hint">Click a photo, then a panel, to place it. Drag a photo inside the preview to reframe it.</p>
+    </section>
+
+    <section class="group">
+      <h2>Template</h2>
+      <div id="templateRow" class="swatch-row"></div>
+    </section>
+
+    <section class="group">
+      <h2>Colour grade</h2>
+      <div id="gradeRow" class="swatch-row"></div>
+    </section>
+
+    <section class="group">
+      <h2>Panels</h2>
+      <div id="panelList" class="panel-list"></div>
+    </section>
+
+    <section class="group">
+      <h2>Caption</h2>
+      <label class="field">Headline
+        <input id="captionMain" type="text" maxlength="42" value="SUNSET HEIST">
+      </label>
+      <label class="field">Sub-line
+        <input id="captionSub" type="text" maxlength="48" value="PALMERA CITY • EST. 1986">
+      </label>
+      <label class="field">Headline size
+        <input id="captionSize" type="range" min="0.6" max="1.5" step="0.05" value="1">
+      </label>
+      <div class="field">
+        <span class="field-label">Position</span>
+        <div class="segmented">
+          <button id="posBottom" type="button" class="active">Bottom</button>
+          <button id="posTop" type="button">Top</button>
+        </div>
+      </div>
+      <div class="field">
+        <span class="field-label">Lettering</span>
+        <div id="themeRow" class="swatch-row"></div>
+      </div>
+      <label class="check"><input id="skewToggle" type="checkbox"> Tilt the headline -4°</label>
+      <label class="check"><input id="badgeToggle" type="checkbox" checked> Sticker badge</label>
+      <label class="field">Badge text
+        <input id="badgeText" type="text" maxlength="20" value="PALMERA CITY">
+      </label>
+    </section>
+  </aside>
+
+  <main class="stage">
+    <div class="stage-bar">
+      <div id="sizeRow" class="segmented sizes"></div>
+      <button id="shuffleBtn" type="button" class="ghost">Shuffle the look</button>
+      <button id="exportBtn" type="button" class="primary">Export PNG</button>
+    </div>
+    <div class="canvas-wrap">
+      <canvas id="preview" width="960" height="540" aria-label="Cover preview"></canvas>
+    </div>
+    <p id="statusLine" class="status" role="status"></p>
+  </main>
+</div>
+
+<div id="coverStage" class="cover-stage" hidden>
+  <canvas id="coverCanvas" width="1920" height="1080" aria-label="The finished cover"></canvas>
+</div>
+
+<script type="module" src="./src/editor-app.js"></script>
 </body>
 </html>
